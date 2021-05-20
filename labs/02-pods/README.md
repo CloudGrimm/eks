@@ -3,12 +3,12 @@
 For this lab, you'll need to be in the `~/environment/eks/labs/02-pods` directory in Cloud9:
 
 ```bash
-$ cd ~/environment/eks/labs/02-pods
+cd ~/environment/eks/labs/02-pods
 ```
 
 ## Define a Pod
 
-Check the pod definition `pod.yaml` in the editor.
+Open the pod definition file `pod.yaml` in the editor.
 
 ```yaml
 apiVersion: v1
@@ -22,10 +22,9 @@ spec:
 ```
 
 - What is the image that this pod is using, where will this image be pulled from?
-- What will the name of this cluster be?
+- What will the name of this pod be?
 
-
-## Send this Definition to the Kubernetes Cluster
+## Apply the Pod Definition to the Kubernetes Cluster
 
 You'll be applying this pod specification to the cluster via kubectl.
 
@@ -33,7 +32,6 @@ You'll be applying this pod specification to the cluster via kubectl.
 $ kubectl apply -f pod.yaml
 pod/web-server created
 ```
-
 
 ## List and Describe the Pod
 
@@ -47,24 +45,23 @@ web-server                        1/1     Running   0          10s
 
 # Describe the details of the pod we just deployed
 $ kubectl describe pod web-server
-$ kubectl describe pod web-server
 Name:               web-server
 Namespace:          default
 Priority:           0
 PriorityClassName:  <none>
 Node:               ip-10-0-100-30.eu-north-1.compute.internal/10.0.100.30
-Start Time:         Fri, 27 Sep 2019 15:55:35 +0200
+Start Time:         Sat, 24 Apr 2021 06:56:27 +0000
 Labels:             <none>
 [...]
 ```
 
 - Take a look at the info that was returned from the describe call
 - Which node is this pod deployed on?
-- What happens if you do `kubectl get pods -o wide`?
+- What happens if you run `kubectl get pods -o wide`?
 
 ## Access our Pod
 
-Now you'll connect to the pod to see what a http call returns:
+Now you'll connect to the pod to see what a HTTP call returns:
 
 ```bash
 # Forward port 8080 locally to our deployed pod exposed on port 80
@@ -76,9 +73,8 @@ $ curl localhost:8080
 
 - Take some time to appreciate what is happening here.
 - How is this request locally being communicated to your pod?
-    - Is the request going direct to the nodes?
-    - Is the requset going via the API server?
-
+  - Is the request going directly to the nodes?
+  - Is the request going via the Kubernetes API server?
 
 ## Clean Up
 

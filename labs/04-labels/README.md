@@ -3,7 +3,7 @@
 For this lab, you'll need to be in the `~/environment/eks/labs/04-labels` directory in Cloud9:
 
 ```bash
-$ cd ~/environment/eks/labs/04-labels
+cd ~/environment/eks/labs/04-labels
 ```
 
 ## Labels in the Object Definition
@@ -21,7 +21,7 @@ metadata:
 spec:
   containers:
   - name: echo
-    image: k8s.gcr.io/echoserver:1.4
+    image: k8s.gcr.io/echoserver:1.10
 ```
 
 - Which image will this pod be using? Where is the image going to come from?
@@ -40,5 +40,3 @@ $ kubectl get pods --show-labels
 - Can you describe this new pod?
 - Can you see the labels when you describe the pod?
 - What command will you use in `kubectl` to query for pods that have the `env: training` label?
-
----

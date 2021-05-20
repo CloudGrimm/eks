@@ -3,12 +3,12 @@
 For this lab, you'll need to be in the `~/environment/eks/labs/05-deployments` directory in Cloud9:
 
 ```bash
-$ cd ~/environment/eks/labs/05-deployments
+cd ~/environment/eks/labs/05-deployments
 ```
 
 ## Define a Deployment
 
-Check the deployment definition `deployment.yaml` in the Cloud9 editor.
+Take a look at the deployment definition `deployment.yaml` in the Cloud9 editor.
 
 ```yaml
 apiVersion: apps/v1
@@ -39,7 +39,7 @@ spec:
 Apply the deployment configuration to your cluster.
 
 ```bash
-$ kubectl apply -f deployment.yaml
+kubectl apply -f deployment.yaml
 ```
 
 ## Checking the Results
@@ -47,9 +47,9 @@ $ kubectl apply -f deployment.yaml
 You can query the deployment in the cluster:
 
 ```bash
-$ kubectl get deployments
-$ kubectl get pods
-$ kubectl get pods -l app=web-server
+kubectl get deployments
+kubectl get pods
+kubectl get pods -l app=web-server
 ```
 
 ## Scaling the Deployment
@@ -57,7 +57,7 @@ $ kubectl get pods -l app=web-server
 Scale the deployment to 5 replicas:
 
 ```bash
-$ kubectl scale deployment web-server-deployment --replicas=5
+kubectl scale deployment web-server-deployment --replicas=5
 ```
 
 ## Port Forward to one of the Pods
@@ -87,11 +87,11 @@ $ kubectl edit deployment web-server-deployment
 ## Check the Results
 
 ```bash
-$ kubectl get pods
+kubectl get pods
 
-$ kubectl get pods -l app=web-server
+kubectl get pods -l app=web-server
 
-$ kubectl get deployments
+kubectl get deployments
 ```
 
 ## Deploy a new Image
@@ -115,10 +115,10 @@ $ kubectl rollout status deployment web-server-deployment
 # OR
 $ kubectl get pods
 # OR
-$ kubectl get pod -l app=web-server -L app
+$ kubectl get pod -l app=web-server -l app
 ```
 
-## Check what is running in one of the pods:
+## Check what is running in one of the pods
 
 Can we see our change?
 
@@ -134,4 +134,4 @@ $ fg
 # Ctrl + C to close the port forward
 ```
 
-The pods have now been deployed with the apache server.
+The pods have now been deployed with the Apache server.

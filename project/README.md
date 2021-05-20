@@ -55,11 +55,16 @@ Once you've completed the above tasks, try the following:
 
 ### Submission
 
-Fill out the assesment in `project/assesment` and upload to the following URL:
+Please access the page: https://submissions.vls-kubernetes.support.aws.dev/ and click at the `Submit Challenge` button.
 
-https://awseb-awseb-quute4cc9ivo-879591767.eu-west-1.elb.amazonaws.com/
+1. Please Make sure that the image which you build can be accessed publicly. [ dockerhub public repo under your account]
+2. If you sucessfully build the application, add the LoadBalancer URL in a file called url.txt , with the http url **ONLY**
+3. Fill out the assesment in [assesment/](https://github.com/aws-els-cpt/eks/tree/master/project/assessment) and together with all the yaml files used to solve the problem and zip it and send to: https://submissions.vls-kubernetes.support.aws.dev#uploadChallange.
+4. Make sure to zip all the files without under dir e.g.: `zip -r 01JhonSnow.zip *`
 
-Username will be firstnamesurname all lowercase (i.e. John Snow will be johnsnow), password `Kubernetes`.
+Note:
+- The zip file must be named as: `Name` + `Surname`.zip, e.g.: `01JhonSnow.zip`
+- It will **ONLY** be allowed **zip** files
 
 ### Setup - EKS Cluster
 
