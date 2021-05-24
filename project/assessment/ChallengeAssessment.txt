@@ -1,5 +1,5 @@
 Please provide your name and AWS account ID:
-Tinashe Wilbrod Chipomho, 517452357903
+Tinashe Wilbrod Chipomho, 
 
 What steps did you take to get the front-end up and running? Any specific challenges?
 - Firstly I had to check the nature of the application and the result was that its a Ruby application
