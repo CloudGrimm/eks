@@ -21,7 +21,12 @@ Document the implementation process here. Include all key actions taken (command
 - The manifests for both backend and frontend were created as follows, backend-deployment.yaml  backend-service.yaml  frontend-deployment.yaml  frontend-service.yaml
 
 Did you attempt the Bonus question(s)? If yes, please describe how you achieved the results.
-
+* Put your image in Amazon ECR repository and update your K8s objects
+    - By navigating to ECR on the console I first create a repo els-aws, then followed by these commands in cloud9
+      - aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 517452357903.dkr.ecr.eu-central-1.amazonaws.com
+      - docker build -t els-aws .
+      - docker tag els-aws:latest 517452357903.dkr.ecr.eu-central-1.amazonaws.com/els-aws:latest
+      - docker push 517452357903.dkr.ecr.eu-central-1.amazonaws.com/els-aws:latest
 
 What was the most difficult part of the challenge and why?
 
