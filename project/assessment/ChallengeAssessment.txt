@@ -1,1 +1,39 @@
-Please provide your name and AWS account ID:What steps did you take to get the front-end up and running? Any specific challenges?How did you connect the front-end with the back-end? How did you find out what was necessary?Document the implementation process here. Include all key actions taken (commands, manifest(s), manual actions etc.). Be specific!Did you attempt the Bonus question(s)? If yes, please describe how you achieved the results.What was the most difficult part of the challenge and why?Two Tier Architecture on Kubernetes1
+Please provide your name and AWS account ID:
+Tinashe Wilbrod Chipomho, 517452357903
+
+What steps did you take to get the front-end up and running? Any specific challenges?
+- Firstly I had to check the nature of the application and the result was that its a Ruby application
+- Looking at the source code the applicaiton dependencies were created in the Gemfile i.e vi Gemfile
+- The Gemfile.lock followed as needed 
+- A Dockerfile was then written to build the image from source code
+
+Building the image was done as follows:
+- docker build -t wilbrodchipomho/frontend-app:v9 .
+- docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app awselscpt/frontend-base bundle install
+- docker run -p 8080:4567 wilbrodchipomho/frontend-app:v9 to test that it was up and running
+- docker push  wilbrodchipomho/frontend-app:v9
+
+How did you connect the front-end with the back-end? How did you find out what was necessary?
+
+
+Document the implementation process here. Include all key actions taken (commands, manifest(s), manual actions etc.). Be specific!
+
+- The manifests for both backend and frontend were created as follows, backend-deployment.yaml  backend-service.yaml  frontend-deployment.yaml  frontend-service.yaml
+
+Did you attempt the Bonus question(s)? If yes, please describe how you achieved the results.
+
+
+What was the most difficult part of the challenge and why?
+
+
+
+
+Two Tier Architecture on Kubernetes
+
+
+
+
+
+1
+
+
