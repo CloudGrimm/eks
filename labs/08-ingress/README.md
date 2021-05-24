@@ -43,3 +43,12 @@ ingress-2048   <none>   *       k8s-game2048-ingress2-18f0d834a4-1377718652.eu-c
 ```
 
 Try accessing the game using the `ADDRESS` returned from the previous command. Ensure the protocol used is `http` and not `https`.
+
+## Learn More
+
+Here are some references to learn more about Ingress and Ingress Controllers:
+
+- [Kubernetes Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- [Kubernetes Ingress Controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/)
+- [AWS Load Balancer Controller](https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/)
+- [Kubernetes Ingress Explained Completely For Beginners](https://www.youtube.com/watch?v=GhZi4DxaxxE)
