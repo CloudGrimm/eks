@@ -20,11 +20,19 @@ Building the image was done as follows:
  * This was to make the image public and available for pulling as recommended
 
 How did you connect the front-end with the back-end? How did you find out what was necessary?
-
+- Initially there was an as follows; Backend unavailable...
+Failed to open TCP connection to backend_service_host:backend_service_port (getaddrinfo: Servname not supported for ai_socktype). 
+- From the above error it was clear that there was need to set env variables for the connection to happen as below;
+  * env: 
+        - name: backend_service_host
+          value: "backend"
+        - name: backend_service_port
+          value: "5000"
 
 Document the implementation process here. Include all key actions taken (commands, manifest(s), manual actions etc.). Be specific!
 
-- The manifests for both backend and frontend were created as follows, backend-deployment.yaml  backend-service.yaml  frontend-deployment.yaml  frontend-service.yaml
+- The manifests for both backend and frontend were created as follows, backend-deployment.yaml, backend-service.yaml,  frontend-deployment.yaml and frontend-service.yaml
+- After completion then declaratively use kubectl appy -f <filename>.yaml 
 
 Did you attempt the Bonus question(s)? If yes, please describe how you achieved the results.
 * Put your image in Amazon ECR repository and update your K8s objects
@@ -68,7 +76,8 @@ frontend-deployment   Deployment/frontend-deployment   1%/50%     2         8   
             
 
 What was the most difficult part of the challenge and why?
-
+- First figuring out how to Dockerise a Ruby application, I do not have Ruby knowledge but manage to gather some knowledge on how to build it. Gemfiles and exposing the right ports
+- Second it was the frontend to backend communication, first I had to figure out the right ports for the backend application then later write the critical env parts to link the backend to the frontend
 
 
 
