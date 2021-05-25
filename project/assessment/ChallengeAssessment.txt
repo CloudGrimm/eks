@@ -2,16 +2,22 @@ Please provide your name and AWS account ID:
 Tinashe Wilbrod Chipomho, 
 
 What steps did you take to get the front-end up and running? Any specific challenges?
-- Firstly I had to check the nature of the application and the result was that its a Ruby application
+- First an EKS cluster was created, following the guide given earlier. 
+- After that I had to check the nature of the application and the result was that its a Ruby application
 - Looking at the source code the applicaiton dependencies were created in the Gemfile i.e vi Gemfile
 - The Gemfile.lock followed as needed 
 - A Dockerfile was then written to build the image from source code
+- The deployment and service manifests were created which were then run declaratively using, kubectl apply -f <filename>.yaml
 
 Building the image was done as follows:
 - docker build -t wilbrodchipomho/frontend-app:v9 .
 - docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app awselscpt/frontend-base bundle install
+ * this was to create the Gemfile.lock
+ 
 - docker run -p 8080:4567 wilbrodchipomho/frontend-app:v9 to test that it was up and running
+ * This wss to ensure that we had buiold the image successfully and it was running
 - docker push  wilbrodchipomho/frontend-app:v9
+ * This was to make the image public and available for pulling as recommended
 
 How did you connect the front-end with the back-end? How did you find out what was necessary?
 
@@ -27,6 +33,39 @@ Did you attempt the Bonus question(s)? If yes, please describe how you achieved 
       - docker build -t els-aws .
       - docker tag els-aws:latest 517452357903.dkr.ecr.eu-central-1.amazonaws.com/els-aws:latest
       - docker push 517452357903.dkr.ecr.eu-central-1.amazonaws.com/els-aws:latest
+ * Configure the frontend to automatically scale based on CPU utilization
+    - Get metrics server: kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+    - Edit the frontend-deployment.yaml by adding the resources section under the container spec:
+    - Create the HPA from the updated manifest: kubectl autoscale deployment frontend-deployment  --cpu-percent=50 --min=2 --max=8
+     - Confirm if it was a success: kubectl describe hpa/frontend-deployment 
+     Name:                                                  frontend-deployment
+Namespace:                                             default
+Labels:                                                <none>
+Annotations:                                           <none>
+CreationTimestamp:                                     Tue, 25 May 2021 06:56:57 +0000
+Reference:                                             Deployment/frontend-deployment
+Metrics:                                               ( current / target )
+  resource cpu on pods  (as a percentage of request):  1% (1m) / 50%
+Min replicas:                                          2
+Max replicas:                                          8
+Deployment pods:                                       2 current / 2 desired
+Conditions:
+  Type            Status  Reason               Message
+  ----            ------  ------               -------
+  AbleToScale     True    ScaleDownStabilized  recent recommendations were higher than current one, applying the highest recent recommendation
+  ScalingActive   True    ValidMetricFound     the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)
+  ScalingLimited  False   DesiredWithinRange   the desired count is within the acceptable range
+
+    - Run some load against: kubectl run apache-bench -it --rm --image=httpd -- ab -n 500000 -c 1000 http://ruby-app.default.svc.cluster.local/
+    - Watch output to confirm: kubectl get horizontalpodautoscaler.autoscaling/frontend-deployment -w
+                               
+NAME                  REFERENCE                        TARGETS    MINPODS   MAXPODS   REPLICAS   AGE
+frontend-deployment   Deployment/frontend-deployment   200%/50%   2         8         4          7m48s
+frontend-deployment   Deployment/frontend-deployment   200%/50%   2         8         8          7m54s
+frontend-deployment   Deployment/frontend-deployment   1%/50%     2         8         8          8m25s
+frontend-deployment   Deployment/frontend-deployment   1%/50%     2         8         8          13m
+frontend-deployment   Deployment/frontend-deployment   1%/50%     2         8         2          13m
+            
 
 What was the most difficult part of the challenge and why?
 
