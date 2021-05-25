@@ -1,26 +1,28 @@
 Please provide your name and AWS account ID:
-Tinashe Wilbrod Chipomho, 
+Tinashe Wilbrod Chipomho, 517452357903
 
 What steps did you take to get the front-end up and running? Any specific challenges?
 - First an EKS cluster was created, following the guide given earlier. 
 - After that I had to check the nature of the application and the result was that its a Ruby application
-- Looking at the source code the applicaiton dependencies were created in the Gemfile i.e vi Gemfile
+- Looking at the source code, the application dependencies were created in the Gemfile i.e vi Gemfile
 - The Gemfile.lock followed as needed 
 - A Dockerfile was then written to build the image from source code
 - The deployment and service manifests were created which were then run declaratively using, kubectl apply -f <filename>.yaml
 
 Building the image was done as follows:
 - docker build -t wilbrodchipomho/frontend-app:v9 .
+
 - docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app awselscpt/frontend-base bundle install
  * this was to create the Gemfile.lock
  
 - docker run -p 8080:4567 wilbrodchipomho/frontend-app:v9 to test that it was up and running
- * This wss to ensure that we had buiold the image successfully and it was running
+ * This was to ensure that we had buiold the image successfully and it was running
+ 
 - docker push  wilbrodchipomho/frontend-app:v9
  * This was to make the image public and available for pulling as recommended
 
 How did you connect the front-end with the back-end? How did you find out what was necessary?
-- Initially there was an as follows; Backend unavailable...
+- Initially there was an error as follows; Backend unavailable...
 Failed to open TCP connection to backend_service_host:backend_service_port (getaddrinfo: Servname not supported for ai_socktype). 
 - From the above error it was clear that there was need to set env variables for the connection to happen as below;
   * env: 
@@ -38,13 +40,20 @@ Did you attempt the Bonus question(s)? If yes, please describe how you achieved 
 * Put your image in Amazon ECR repository and update your K8s objects
     - By navigating to ECR on the console I first create a repo els-aws, then followed by these commands in cloud9
       - aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 517452357903.dkr.ecr.eu-central-1.amazonaws.com
+      
       - docker build -t els-aws .
+      
       - docker tag els-aws:latest 517452357903.dkr.ecr.eu-central-1.amazonaws.com/els-aws:latest
+      
       - docker push 517452357903.dkr.ecr.eu-central-1.amazonaws.com/els-aws:latest
+      
  * Configure the frontend to automatically scale based on CPU utilization
     - Get metrics server: kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+    
     - Edit the frontend-deployment.yaml by adding the resources section under the container spec:
+    
     - Create the HPA from the updated manifest: kubectl autoscale deployment frontend-deployment  --cpu-percent=50 --min=2 --max=8
+    
      - Confirm if it was a success: kubectl describe hpa/frontend-deployment 
      Name:                                                  frontend-deployment
 Namespace:                                             default
@@ -65,6 +74,7 @@ Conditions:
   ScalingLimited  False   DesiredWithinRange   the desired count is within the acceptable range
 
     - Run some load against: kubectl run apache-bench -it --rm --image=httpd -- ab -n 500000 -c 1000 http://ruby-app.default.svc.cluster.local/
+    
     - Watch output to confirm: kubectl get horizontalpodautoscaler.autoscaling/frontend-deployment -w
                                
 NAME                  REFERENCE                        TARGETS    MINPODS   MAXPODS   REPLICAS   AGE
@@ -76,7 +86,7 @@ frontend-deployment   Deployment/frontend-deployment   1%/50%     2         8   
             
 
 What was the most difficult part of the challenge and why?
-- First figuring out how to Dockerise a Ruby application, I do not have Ruby knowledge but manage to gather some knowledge on how to build it. Gemfiles and exposing the right ports
+- First figuring out how to Dockerise a Ruby application, I do not have Ruby knowledge but managed to gather some knowledge on how to build it such as Gemfiles and exposing the right ports
 - Second it was the frontend to backend communication, first I had to figure out the right ports for the backend application then later write the critical env parts to link the backend to the frontend
 
 
